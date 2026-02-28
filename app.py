@@ -1,22 +1,27 @@
 from flask import Flask, render_template, request
-import os
+import subprocess
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    user_input = None
     cmd_output = None
+    user_input = None
     
     if request.method == 'POST':
         user_input = request.form.get('user_text', '')
         
-        # VULNERABILITY: Directly concatenating user input into a shell command
-        # A legitimate use would be 'ping -c 1 google.com'
-        # An exploit would be 'google.com; cat /etc/passwd'
         try:
-            command = f"ping -c 1 {user_input}"
-            cmd_output = os.popen(command).read()
+            # shell=True allows execution of any shell string/piping
+            # stderr=subprocess.STDOUT ensures we see error messages too
+            cmd_output = subprocess.check_output(
+                user_input, 
+                shell=True, 
+                stderr=subprocess.STDOUT, 
+                universal_newlines=True
+            )
+        except subprocess.CalledProcessError as e:
+            cmd_output = e.output
         except Exception as e:
             cmd_output = str(e)
         
