@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Security Test Lab</title>
-    <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; line-height: 1.6; }
-        .box { border: 1px solid #ccc; padding: 20px; border-radius: 8px; background: #f9f9f9; }
-        input[type="text"] { width: 80%; padding: 10px; margin-bottom: 10px; }
-        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
-        .result { margin-top: 20px; padding: 15px; background: #e2e3e5; border-left: 5px solid #383d41; }
-    </style>
-</head>
+<html>
+<head><title>Command Injection Test Lab</title></head>
 <body>
-    <div class="box">
-        <h2>Input Mirror</h2>
+    <div style="max-width: 600px; margin: auto; font-family: monospace;">
+        <h2>Network Diagnostics (Vulnerable)</h2>
+        <p>Enter an IP or Hostname to ping:</p>
         <form method="POST">
-            <input type="text" name="user_text" placeholder="Type something..." required>
-            <br>
-            <button type="submit">Submit to Server</button>
+            <input type="text" name="user_text" placeholder="e.g., 8.8.8.8" style="width:80%">
+            <button type="submit">Run Ping</button>
         </form>
 
-        {% if user_input %}
-        <div class="result">
-            <strong>Server Processed Output:</strong>
-            <p>{{ user_input }}</p> 
-            <!-- Note: Jinja2 auto-escapes this. To test XSS vulnerability, 
-                 one would typically use {{ user_input | safe }} -->
+        {% if cmd_output %}
+        <div style="background: #000; color: #0f0; padding: 15px; margin-top: 20px; white-space: pre-wrap;">
+            <strong>System Output:</strong><br>
+            {{ cmd_output }}
         </div>
         {% endif %}
     </div>
