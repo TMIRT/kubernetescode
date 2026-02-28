@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.11-slim-buster
+FROM python:3.11-slim-bookworm
 
 # 1. Install basic networking utilities (curl, ping, netcat, net-tools)
 RUN apt-get update && apt-get install -y \
