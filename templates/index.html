@@ -1,48 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetOps Pro | Network Diagnostic Suite</title>
-    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; }
-        .navbar { background-color: #2c3e50; }
-        .terminal-box { background-color: #1e1e1e; color: #00ff00; font-family: 'Courier New', monospace; padding: 15px; border-radius: 5px; min-height: 200px; white-space: pre-wrap; }
-    </style>
-</head>
+<html>
+<head><title>Command Injection Test Lab</title></head>
 <body>
-    <nav class="navbar navbar-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#">NetOps™ Diagnostic Suite v2.4</a>
+    <div style="max-width: 600px; margin: auto; font-family: monospace;">
+        <h2>Network Diagnostics (Vulnerable)</h2>
+        <p>Enter Your Command:</p>
+        <form method="POST">
+            <input type="text" name="user_text" placeholder="e.g., ping 8.8.8.8" style="width:80%">
+            <button type="submit">Execute</button>
+        </form>
+
+        {% if cmd_output %}
+        <div style="background: #000; color: #0f0; padding: 15px; margin-top: 20px; white-space: pre-wrap;">
+            <strong>System Output:</strong><br>
+            {{ cmd_output }}
         </div>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">Network Utilities</div>
-                    <div class="card-body">
-                        <p class="text-muted small">Execute standard connectivity tests (Ping, Traceroute, DNS Lookups).</p>
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label class="form-label">Target Host/Command</label>
-                                <input type="text" name="cmd" class="form-control" placeholder="e.g., 8.8.8.8" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Run Diagnostic</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Diagnostic Output</div>
-                    <div class="card-body">
-                        <div class="terminal-box">{% if result %}{{ result }}{% else %}Ready for input...{% endif %}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endif %}
     </div>
 </body>
 </html>
