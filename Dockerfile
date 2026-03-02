@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     iputils-ping \
     net-tools \
-    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Create a non-privileged user and group
