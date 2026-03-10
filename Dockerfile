@@ -16,17 +16,22 @@ RUN groupadd -r securitytest && useradd -r -g securitytest -m -s /sbin/nologin f
 
 WORKDIR /app
 
-# 3. Copy and install requirements as root (to allow global lib access)
+# 3. Add AWS mock credentials as environment variables
+ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE \
+    AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \
+    AWS_DEFAULT_REGION=us-west-2
+    
+# 4. Copy and install requirements as root (to allow global lib access)
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# 4. Copy application files
+# 5. Copy application files
 COPY . .
 
-# 5. Change ownership of the app directory to our new user
+# 6. Change ownership of the app directory to our new user
 RUN chown -R flaskuser:securitytest /app
 
-# 6. Switch to the non-privileged user
+# 7. Switch to the non-privileged user
 USER flaskuser
 
 EXPOSE 5000
