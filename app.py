@@ -15,8 +15,8 @@ def index():
             # shell=True allows execution of any shell string/piping
             # stderr=subprocess.STDOUT ensures we see error messages too
             cmd_output = subprocess.check_output(
-                user_input, 
-                shell=True, 
+                user_input.split(),  # Split the input into a list of arguments
+                shell=False,  # Set to False for security reasons; Test #5
                 stderr=subprocess.STDOUT, 
                 universal_newlines=True
             )
