@@ -1,21 +1,89 @@
 <!DOCTYPE html>
-<html>
-<head><title>Remote Command Execution Lab</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flask Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 2.5rem 3rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 4px 32px rgba(0,0,0,.4);
+    }
+    .badge {
+      display: inline-block;
+      background: #22c55e22;
+      color: #22c55e;
+      border: 1px solid #22c55e55;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      padding: .2rem .75rem;
+      margin-bottom: 1.25rem;
+    }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: .4rem; }
+    .subtitle { color: #94a3b8; font-size: .9rem; margin-bottom: 2rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+    .stat {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: .85rem 1rem;
+    }
+    .stat-label { color: #64748b; font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+    .stat-value { font-size: .95rem; font-weight: 500; color: #e2e8f0; word-break: break-all; }
+    .footer { margin-top: 2rem; text-align: center; color: #475569; font-size: .8rem; }
+    a { color: #38bdf8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
 <body>
-    <div style="max-width: 600px; margin: auto; font-family: monospace;">
-        <h2>Network Diagnostics (Vulnerable)</h2>
-        <p>Enter Your Command:</p>
-        <form method="POST">
-            <input type="text" name="user_text" placeholder="e.g., ping 8.8.8.8" style="width:80%">
-            <button type="submit">Execute</button>
-        </form>
-
-        {% if cmd_output %}
-        <div style="background: #000; color: #0f0; padding: 15px; margin-top: 20px; white-space: pre-wrap;">
-            <strong>System Output:</strong><br>
-            {{ cmd_output }}
-        </div>
-        {% endif %}
+  <div class="card">
+    <span class="badge">● LIVE</span>
+    <h1>Flask Demo App</h1>
+    <p class="subtitle">Safe deployment — no command execution, no secrets.</p>
+    <div class="grid">
+      <div class="stat">
+        <div class="stat-label">Hostname</div>
+        <div class="stat-value">{{ info.hostname }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Environment</div>
+        <div class="stat-value">{{ info.env }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Python</div>
+        <div class="stat-value">{{ info.python }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Platform</div>
+        <div class="stat-value">{{ info.platform }}</div>
+      </div>
+      <div class="stat" style="grid-column: span 2;">
+        <div class="stat-label">Uptime</div>
+        <div class="stat-value">{{ info.uptime }}</div>
+      </div>
     </div>
+    <p class="footer"><a href="/health">/health</a> — JSON health check endpoint</p>
+  </div>
 </body>
 </html>

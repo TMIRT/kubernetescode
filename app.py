@@ -1,31 +1,33 @@
-from flask import Flask, render_template, request
-import subprocess
+import os
+import platform
+import socket
+from datetime import datetime, timezone
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    cmd_output = None
-    user_input = None
-    
-    if request.method == 'POST':
-        user_input = request.form.get('user_text', '')
-        
-        try:
-            # shell=True allows execution of any shell string/piping
-            # stderr=subprocess.STDOUT ensures we see error messages too
-            cmd_output = subprocess.check_output(
-                user_input.split(),  # Split the input into a list of arguments
-                shell=False,  # Set to False for security reasons; Test #7
-                stderr=subprocess.STDOUT, 
-                universal_newlines=True
-            )
-        except subprocess.CalledProcessError as e:
-            cmd_output = e.output
-        except Exception as e:
-            cmd_output = str(e)
-        
-    return render_template('index.html', user_input=user_input, cmd_output=cmd_output)
+START_TIME = datetime.now(timezone.utc)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+def uptime():
+    delta = datetime.now(timezone.utc) - START_TIME
+    h, rem = divmod(int(delta.total_seconds()), 3600)
+    m, s = divmod(rem, 60)
+    return f"{h}h {m}m {s}s"
+
+@app.route("/")
+def index():
+    info = {
+        "hostname": socket.gethostname(),
+        "python":   platform.python_version(),
+        "platform": platform.system(),
+        "uptime":   uptime(),
+        "env":      os.environ.get("APP_ENV", "production"),
+    }
+    return render_template("index.html", info=info)
+
+@app.route("/health")
+def health():
+    return jsonify(status="ok", uptime=uptime()), 200
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
