@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.11-slim-bookworm
+FROM python:3.14-slim-bookworm
 
 RUN groupadd -r appgroup && useradd -r -g appgroup -m -s /sbin/nologin flaskuser
 
