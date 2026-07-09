@@ -7,7 +7,7 @@ from flask import Flask, jsonify, render_template
 app = Flask(__name__)
 
 START_TIME = datetime.now(timezone.utc)
-VERSION = "1.1.11"
+VERSION = "1.1.12"
 
 def uptime():
     delta = datetime.now(timezone.utc) - START_TIME
