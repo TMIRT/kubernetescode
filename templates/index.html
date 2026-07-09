@@ -257,7 +257,7 @@
 
     <div class="hero">
       <div class="section-label">// system console</div>
-      <h1>Flask Demo <span>v1.0</span></h1>
+      <h1>Flask Demo <span>v{{ info.version }}</span></h1>
       <p>Safe deployment — no command execution, no embedded secrets.</p>
     </div>
 
@@ -305,6 +305,12 @@
         <div class="card-value">flaskuser</div>
       </div>
 
+      <div class="card">
+        <div class="card-icon">⊞</div>
+        <div class="card-label">App Version</div>
+        <div class="card-value accent">v{{ info.version }}</div>
+      </div>
+
       <div class="card uptime-card">
         <div>
           <div class="card-label">Container Uptime</div>
@@ -330,6 +336,12 @@
         <span class="method get">GET</span>
         <span class="path">/health</span>
         <span class="desc">JSON health check for load balancer probes</span>
+        <span class="ep-status">● 200</span>
+      </div>
+      <div class="endpoint-row">
+        <span class="method get">GET</span>
+        <span class="path">/version</span>
+        <span class="desc">App version and base image info</span>
         <span class="ep-status">● 200</span>
       </div>
     </div>
