@@ -2,6 +2,8 @@
 
 FROM python:3.14-slim-bookworm
 
+RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN groupadd -r appgroup && useradd -r -g appgroup -m -s /sbin/nologin flaskuser
 
 WORKDIR /app
